@@ -18,13 +18,11 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/placeholder.png "Model Visualization"
-[image2]: ./examples/placeholder.png "Grayscaling"
-[image3]: ./examples/placeholder_small.png "Recovery Image"
-[image4]: ./examples/placeholder_small.png "Recovery Image"
-[image5]: ./examples/placeholder_small.png "Recovery Image"
-[image6]: ./examples/placeholder_small.png "Normal Image"
-[image7]: ./examples/placeholder_small.png "Flipped Image"
+[image1]: ./images/center_2020_05_06_17_32_28_057.jpg "Center View"
+[image2]: ./images/left_2020_05_06_17_32_28_057.jpg "Left View"
+[image3]: ./images/right_2020_05_06_17_32_28_057.jpg "Right View"
+[image4]: ./images/OriginalandFlipped.png "Original and Flipped Image"
+
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
@@ -96,31 +94,42 @@ At the end of the process, the vehicle is able to drive autonomously around the 
 #### 2. Final Model Architecture
 
 The final model architecture (clone.py lines 67-77) consisted of a convolution neural network with the following layers and layer sizes:
+| Layer         		|     Description	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| Input         		| 160x320x3 RGB image   							| 
+| Cropping     	| 70x25 	|
+| Convolution 5x5	    | activation = relu     									|
+| Max pooling				|     									|
+| Convolution 5x5	    | activation = relu     									|
+| Max pooling				|     									|
+|	Flatten					|									|
+|	Dense					|	outputs 120											|
+|	Dense					|	outputs 84											|
+|	Dense					|	outputs 1										|
 
 #### 3. Creation of the Training Set & Training Process
 
 To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
 
+![alt text][image1]
+
+I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to recover. It makes the car getting back to center.
+
+![alt text][image1]
 ![alt text][image2]
-
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
-
 ![alt text][image3]
-![alt text][image4]
-![alt text][image5]
 
 Then I repeated this process on track two in order to get more data points.
 
-To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
+To augment the data sat, I also flipped images and angles thinking that this would generalize the data. For example, here is an image that has then been flipped:
 
-![alt text][image6]
-![alt text][image7]
-
-Etc ....
-
-After the collection process, I had X number of data points. I then preprocessed this data by ...
+![alt text][image4]
 
 
-I finally randomly shuffled the data set and put Y% of the data into a validation set. 
+After the collection process, I had 21870 number of data points 7290 images represents for center, 7290 images represents left images,and 7290 images represents the right images. I then preprocessed this data by flipping images and taking reverse of steering measurement. 
 
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
+I finally randomly shuffled the data set and put 20% of the data into a validation set. That means training data has 5382 lines including center, left, and right.
+
+I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 5. I used an adam optimizer so that manually training the learning rate wasn't necessary.
+
+
